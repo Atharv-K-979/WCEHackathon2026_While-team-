@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>VESSEL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #161a24;
+      --surface2: #1e2436;
+      --border: #2a3050;
+      --primary: #4d8eff;
+      --primary-glow: rgba(77, 142, 255, 0.25);
+      --success: #00c896;
+      --warning: #ffb347;
+      --danger: #ff5b5b;
+      --text: #e8eaf6;
+      --text-muted: #7b82a0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      width: 360px;
+      min-height: 560px;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px 10px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .logo .bolt {
+      color: #f5a623;
+      font-size: 22px;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--success);
+      border: 1.5px solid var(--success);
+      border-radius: 20px;
+      padding: 4px 10px;
+      background: rgba(0, 200, 150, 0.08);
+    }
+
+    /* ── STATS GRID ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px 18px 8px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-value.highlight {
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ── RECENT ACTIVITY ── */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px 8px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .view-all {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: opacity 0.2s;
+    }
+
+    .view-all:hover { opacity: 0.7; }
+
+    .activity-area {
+      flex: 1;
+      margin: 0 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 130px;
+      max-height: 190px;
+      overflow-y: auto;
+    }
+
+    .activity-area::-webkit-scrollbar { width: 4px; }
+    .activity-area::-webkit-scrollbar-track { background: transparent; }
+    .activity-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .empty-activity {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 130px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .log-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .log-row:last-child { border-bottom: none; }
+    .log-row:hover { background: var(--surface2); }
+
+    .log-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .dot-redacted { background: var(--primary); box-shadow: 0 0 6px var(--primary); }
+    .dot-pasted   { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+    .dot-cancelled { background: var(--text-muted); }
+
+    .log-body { flex: 1; min-width: 0; }
+
+    .log-action-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .log-detail {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .log-time {
+      font-size: 10px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* ── BUTTONS ── */
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 14px 18px 10px;
+    }
+
+    .btn {
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4d8eff, #6a5cff);
+      color: white;
+    }
+    .footer {
+      text-align: center;
+      padding: 6px 18px 14px;
+    }
+
+    .footer a {
+      font-size: 12px;
+      color: var(--primary);
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .footer a:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <span class="bolt">⚡</span> VESSEL
+    </div>
+    <div class="status-badge" id="status-badge">PROTECTION ACTIVE</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-threats">0</div>
+      <div class="stat-label">Threats Blocked</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-analyzed">0</div>
+      <div class="stat-label">Specs Analyzed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-redactions">0</div>
+      <div class="stat-label">Redactions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value highlight" id="stat-grade">A+</div>
+      <div class="stat-label">Security Grade</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Recent Activity</div>
+    <button class="view-all" id="clear-btn">Clear All</button>
+  </div>
+
+  <div class="activity-area" id="activity-area">
+    <div class="empty-activity">No recent activity</div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-secondary">Settings</button>
+    <button class="btn btn-primary">Dashboard</button>
+  </div>
+
+  <div class="footer">
+    <a href="#">Learn More About VESSEL</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
