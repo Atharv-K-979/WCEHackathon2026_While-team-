@@ -6,7 +6,7 @@
 
 **VESSEL** (Vulnerability Evaluation and Secure Software Engineering Layer) is a comprehensive security suite designed to protect developers in the age of AI. It operates as a first line of defense, ensuring that sensitive data, malicious prompts, and insecure specifications never compromise the development lifecycle.
 
----
+---    
 
 ## The Problem
 The modern security perimeter has shifted from the network to the developer's browser. As developers increasingly rely on AI assistants, human errors—like pasting sensitive API keys into ChatGPT or falling victim to hidden prompt injections in web content—bypass traditional WAFs and CSPMs.
