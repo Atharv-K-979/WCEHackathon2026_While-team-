@@ -1,17 +1,17 @@
 # VESSEL: DevSecOps at the Human-AI Interface
 
 <p align="center">
-  <img src="Extension/icons/icon128.png" alt="VESSEL Logo" width="128">
+  <img src="VESSEL_WEB/public/vessel-logo.png" alt="VESSEL Logo" width="128">
 </p>
 
 **VESSEL** (Vulnerability Evaluation and Secure Software Engineering Layer) is a comprehensive security suite designed to protect developers in the age of AI. It operates as a first line of defense, ensuring that sensitive data, malicious prompts, and insecure specifications never compromise the development lifecycle.
 
 ---
 
-## 🚀 The Problem
+## The Problem
 The modern security perimeter has shifted from the network to the developer's browser. As developers increasingly rely on AI assistants, human errors—like pasting sensitive API keys into ChatGPT or falling victim to hidden prompt injections in web content—bypass traditional WAFs and CSPMs.
 
-## 🛡️ The Solution
+## The Solution
 VESSEL provides three distinct defensive layers, operating entirely locally to preserve privacy and performance:
 
 ### 1. AI Prompt Injection Defense
@@ -25,13 +25,13 @@ Analyzes requirements in real-time within editors like Jira and Notion. It ident
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 - **/Extension**: The core Chrome extension (Manifest V3) containing the redactor, interceptor, and local ML models.
 - **/VESSEL_WEB**: The professional landing page and dashboard for the project.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Browser Extension**: Chrome MV3, Vanilla JS, Shadow DOM.
 - **Local ML Engine**: `onnxruntime-web` (WASM) for high-performance, local classification.
 - **Generative AI**: Integration with Google Gemini 1.5 Flash for intelligent remediation.
@@ -39,7 +39,7 @@ Analyzes requirements in real-time within editors like Jira and Notion. It ident
 
 ---
 
-## 🏁 Getting Started
+##  Getting Started
 
 ### Extension Setup
 1. Clone the repository.
@@ -53,10 +53,10 @@ Analyzes requirements in real-time within editors like Jira and Notion. It ident
 
 ---
 
-## 🏛️ Acknowledgments
+##  Acknowledgments
 The name **VESSEL** was inspired by research into container security at Carnegie Mellon University (CMU SEI). We believe the web browser is the modern enterprise's ultimate container, and we mathematically verify the "cargo" before it is deployed.
 
-## ✍️ Learn More
+##  Learn More
 Read our detailed design philosophy on [Medium](https://medium.com/@atharvvk853/vessel-vulnerability-evaluation-and-secure-software-engineering-layer-78250e113b8a).
 
 ---
